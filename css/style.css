@@ -1,0 +1,217 @@
+:root {
+  --bg-primary: #FAF8F5;
+  --bg-surface: #FFFFFF;
+  --bg-surface-soft: #F4EFEA;
+  --text-main: #2D2A26;
+  --text-muted: #736E67;
+  --text-subtle: #A39E96;
+  --accent: #8E735B;
+  --accent-light: #E8DFD8;
+  --accent-dark: #67523F;
+  --border-light: #EBE5DF;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-sans);
+  background-color: #121212; /* Dark framing on wide desktop */
+  color: var(--text-main);
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+  background-color: #1C1A18;
+}
+
+/* App container - mobile-first editorial style, centered with modern mobile aspect */
+.app-container {
+  width: 100%;
+  max-width: 480px;
+  background-color: var(--bg-primary);
+  min-height: 100vh;
+  position: relative;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+/* Typography styles */
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+/* Subtle botanical / linen texture background */
+.linen-bg {
+  background-color: var(--bg-primary);
+  background-image: radial-gradient(#dcd5cc 0.75px, transparent 0.75px);
+  background-size: 24px 24px;
+}
+
+/* Opening Gate / Modal Screen */
+#gate-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background-color: var(--bg-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease;
+}
+
+#gate-screen.unlocked {
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+
+/* Smooth reveal animation */
+.reveal-item {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-item.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Music vinyl disc rotation */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinning {
+  animation: spin 5s linear infinite;
+}
+
+.paused {
+  animation-play-state: paused;
+}
+
+/* Audio wave animation */
+.audio-bar {
+  width: 3px;
+  background-color: var(--accent);
+  border-radius: 2px;
+  transition: height 0.2s ease;
+}
+
+.audio-playing .audio-bar:nth-child(1) {
+  animation: bounce 0.9s ease-in-out infinite alternate;
+}
+.audio-playing .audio-bar:nth-child(2) {
+  animation: bounce 0.6s ease-in-out infinite 0.2s alternate;
+}
+.audio-playing .audio-bar:nth-child(3) {
+  animation: bounce 0.8s ease-in-out infinite 0.4s alternate;
+}
+
+@keyframes bounce {
+  0% {
+    height: 4px;
+  }
+  100% {
+    height: 18px;
+  }
+}
+
+/* Minimalist Divider */
+.ornament-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 1.5rem 0;
+  opacity: 0.6;
+}
+
+.ornament-divider::before,
+.ornament-divider::after {
+  content: '';
+  height: 1px;
+  width: 40px;
+  background-color: var(--accent);
+}
+
+.ornament-divider span {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: var(--accent);
+}
+
+/* Card Styling */
+.clean-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 18px;
+  padding: 1.75rem 1.25rem;
+  box-shadow: 0 4px 20px -2px rgba(45, 42, 38, 0.03);
+  transition: all 0.3s ease;
+}
+
+.clean-card:hover {
+  border-color: var(--accent-light);
+  box-shadow: 0 8px 30px -4px rgba(45, 42, 38, 0.06);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent-light);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* Toast Notification */
+#toast {
+  position: fixed;
+  bottom: 84px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background-color: #2D2A26;
+  color: #FAF8F5;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-size: 0.875rem;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 90;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+#toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
